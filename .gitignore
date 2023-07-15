@@ -1,0 +1,7 @@
+/node_modules/
+/external/compiler/tesi/refactored-module/target/
+/external/compiler/tesi/original-module/target/
+/external/compiler/tesi/aggregate-reports/target/
+/external/compiler/tesi/test.csv
+/external/compiler/tesi/pom.xml
+/external/compiler/LocalExercises/
