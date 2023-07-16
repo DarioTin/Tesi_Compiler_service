@@ -55,7 +55,8 @@ app.post('/compiler/refactoring',async (req, res) => {
     try{
         let result = await refactoring_service.doCompile(req.body)
         result.testResult = utils.cleanSuccessResponse(result.testResult)
-        result.smellResult = utils.cleanSmells(result.smellResult);
+        if(result.success)
+            result.smellResult = utils.cleanSmells(result.smellResult);
         console.log(result);
         res.status(200);
         res.json({testResult: result.testResult, similarityResponse: result.similarityResponse, smellResult: result.smellResult, success: result.success})
