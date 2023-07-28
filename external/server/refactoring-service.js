@@ -28,7 +28,10 @@ function doCompile(exercise) {
       response.testResult = result
       if (response.testResult.includes('BUILD SUCCESS')) {
         let similarity_promise = scraper.checkSimilarity(exercise.exerciseConfiguration).then((result) => {
-          response.similarityResponse = result
+          response.similarityResponse = result[0];
+          response.originalCoverage = result[1];
+          response.refactoredCoverage = result[2];
+
         })
         let smell_promise = shell.execSmellDetector().then((result) => {
           response.smellResult = result;

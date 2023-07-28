@@ -25,7 +25,8 @@ objCalcUnderTest = new Calculator();
         long result = objCalcUnderTest.add(a, b);
         //Assert
         assertEquals(expectedResult, result);
-}
+        assertEquals(result, result);
+    }
 
     @Test
     public void testSubtract() {

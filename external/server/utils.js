@@ -65,8 +65,14 @@ function cleanSuccessResponse(response){
   return response
 }
 
-function cleanSmells(smells){
+function removeIgnoredSmells(smells, exerciseConfiguration){
+  const ignoredSmells = exerciseConfiguration["ignored_smells"];
   let result = JSON.parse(smells);
+  if(ignoredSmells !== undefined){
+    ignoredSmells.forEach((ignored)=>{
+      delete result[ignored];
+    })
+  }
   delete result['Exception Catching Throwing']
   return JSON.stringify(result)
 }
@@ -81,5 +87,5 @@ module.exports = {
   cleanErrorResponse,
   cleanSuccessResponse,
   configEnvironment,
-  cleanSmells
+  removeIgnoredSmells
 }

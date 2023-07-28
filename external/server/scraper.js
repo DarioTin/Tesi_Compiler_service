@@ -23,12 +23,15 @@ async function checkSimilarity(exerciseConfiguration){
   const acceptance = exerciseConfiguration.refactoring_limit;
 
   if(first_coverage === second_coverage && first_coverage === total){
-    return true
-  } else{
-      let first_difference = total - first_coverage
-      let second_difference = total - second_coverage
-      let percentage_difference = Math.abs(first_difference - second_difference)
-      return percentage_difference <= acceptance;
+    return [true, first_coverage, second_coverage]
+  }
+  else{
+    let first_difference = total - first_coverage
+    let second_difference = total - second_coverage
+    if(second_difference < first_difference)
+      return [true, first_coverage,second_coverage]
+    let percentage_difference = Math.abs(first_difference - second_difference)
+    return [percentage_difference <= acceptance,first_coverage, second_coverage]
   }
 }
 

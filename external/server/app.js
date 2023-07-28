@@ -53,12 +53,20 @@ server.listen(port, (err) => {
 
 app.post('/compiler/refactoring',async (req, res) => {
     try{
-        let result = await refactoring_service.doCompile(req.body)
+        const data = req.body;
+        let result = await refactoring_service.doCompile(data)
         result.testResult = utils.cleanSuccessResponse(result.testResult)
-        result.smellResult = utils.cleanSmells(result.smellResult);
+        if(result.success)
+            result.smellResult = utils.removeIgnoredSmells(result.smellResult, data.exerciseConfiguration);
         console.log(result);
         res.status(200);
-        res.json({testResult: result.testResult, similarityResponse: result.similarityResponse, smellResult: result.smellResult, success: result.success})
+        res.json({ testResult: result.testResult,
+                        similarityResponse: result.similarityResponse,
+                        smellResult: result.smellResult,
+                        success: result.success,
+                        originalCoverage: result.originalCoverage,
+                        refactoredCoverage: result.refactoredCoverage
+        })
         res.end();
     }catch(error){
         console.log(error);
